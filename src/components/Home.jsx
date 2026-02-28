@@ -16,9 +16,8 @@ function Home({ isDarkMode }) {
           
           {/* 直接从 Welcome 开始，模仿参考图的排版 */}
           <p style={pStyle}>
-            Welcome! I'm a 1st year PhD Student in Computational Media and Arts at HKUST(GZ). 
-            I am advised by Prof. Xin Tong at the Dynamic Graphics Group (DGP) lab and Prof. Yan Chen.
-            (注：这里我暂时保留你的导师名字，你可以按需修改)
+          Hello! I'm a 1st year PhD Student in Computational Media and Arts at HKUST(GZ). 
+          I am advised by Prof. Xin Tong at the AI & Art for Knowledge & Creativity(ARK) Lab.
           </p>
           <p style={pStyle}>
             My research interests lie in human-robot interaction, and mechanical design, with a strong passionate on embodied AI, and companion robotics.
