@@ -35,7 +35,7 @@ function Home({ isDarkMode }) {
         </div>
 
         <div className="bio-photo">
-          <img src="/img/myphoto.jpg" alt="Profile Photo" className="profile-pic" style={{ width: '100%', maxWidth: '300px' }} />
+        <img src="/img/myphoto.jpg" alt="Jie Yu" className="profile-pic" />
           {/* 这里的地址信息模仿参考图，放在图片正下方，并使用等宽字体 */}
           <div className="contact-info" style={{ color: isDarkMode ? '#aaa' : '#555', marginTop: '15px', textAlign: 'left', paddingLeft: '10px' }}>
             <p style={{ margin: '2px 0' }}>No.1 Duxue Road</p>
