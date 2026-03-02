@@ -1,23 +1,25 @@
 import React from 'react';
+// 1. 引入全局仓库
+import { useTheme } from '../context/ThemeContext';
 
-// 因为按钮搬走了，这里不再需要接收 setIsDarkMode
-function Home({ isDarkMode }) {
+// 2. 删除了括号里的参数 (Props)
+function Home() {
+  // 3. 直接从仓库里获取暗黑模式状态
+  const { isDarkMode } = useTheme(); 
   
   const pStyle = {
     color: isDarkMode ? '#b0b0b0' : '#333',
     fontSize: '1.1rem',
-    marginBottom: '20px' // 增加段落间距
+    marginBottom: '20px'
   };
 
   return (
     <main>
       <section className="bio-section" style={{ marginTop: '20px' }}>
         <div className="bio-text">
-          
-          {/* 直接从 Welcome 开始，模仿参考图的排版 */}
           <p style={pStyle}>
-          Hello! I'm a 1st year PhD Student in Computational Media and Arts at HKUST(GZ). 
-          I am advised by Prof. Xin Tong at the AI & Art for Knowledge & Creativity(ARK) Lab.
+            Welcome! I'm a 1st year PhD Student in Computational Media and Arts at HKUST(GZ). 
+            I am advised by Prof. Xin Tong at the Dynamic Graphics Group (DGP) lab and Prof. Yan Chen.
           </p>
           <p style={pStyle}>
             My research interests lie in human-robot interaction, and mechanical design, with a strong passionate on embodied AI, and companion robotics.
@@ -34,8 +36,7 @@ function Home({ isDarkMode }) {
         </div>
 
         <div className="bio-photo">
-        <img src="/img/myphoto.jpg" alt="Jie Yu" className="profile-pic" />
-          {/* 这里的地址信息模仿参考图，放在图片正下方，并使用等宽字体 */}
+          <img src="/img/myphoto.jpg" alt="Profile Photo" className="profile-pic" style={{ width: '100%', maxWidth: '300px' }} />
           <div className="contact-info" style={{ color: isDarkMode ? '#aaa' : '#555', marginTop: '15px', textAlign: 'left', paddingLeft: '10px' }}>
             <p style={{ margin: '2px 0' }}>No.1 Duxue Road</p>
             <p style={{ margin: '2px 0' }}>Guangzhou, China</p>

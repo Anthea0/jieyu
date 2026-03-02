@@ -1,11 +1,18 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom'; // 引入路由链接组件
+import { useTheme } from '../context/ThemeContext'; // 引入 Context（注意路径是 ../）
 
-function Header({ currentPage, setCurrentPage, isDarkMode, setIsDarkMode }) {
-    const linkColor = isDarkMode ? '#aaa' : '#555';
-    const activeColor = isDarkMode ? '#fff' : '#000';
+// 删除了所有传参
+function Header() {
+    // 从 Context 获取状态和切换函数
+    const { isDarkMode, toggleTheme } = useTheme();
     
-    // 切换主题的函数
-    const toggleTheme = () => setIsDarkMode(!isDarkMode);
+    // 自定义链接样式，根据当前是否激活 (isActive) 来变色
+    const getLinkStyle = ({ isActive }) => ({
+        color: isActive ? (isDarkMode ? '#fff' : '#000') : (isDarkMode ? '#aaa' : '#555'),
+        textDecoration: 'none',
+        fontWeight: isActive ? 'bold' : 'normal'
+    });
 
     return (
         <header style={{ 
@@ -13,42 +20,27 @@ function Header({ currentPage, setCurrentPage, isDarkMode, setIsDarkMode }) {
             justifyContent: 'space-between', 
             alignItems: 'center',
             padding: '40px 0 20px 0',
-            borderBottom: 'none' // 去掉底边框，更贴近参考图的极简风
+            borderBottom: 'none'
         }}>
-            {/* 左侧：把 Logo 变成你的名字 */}
             <div style={{ fontSize: '2.2rem', fontWeight: 'bold', color: isDarkMode ? '#fff' : '#000' }}>
                 Jie <span style={{ fontWeight: 300 }}>Yu</span>
             </div>
             
-            {/* 右侧：导航链接 + 太阳/月亮按钮 */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                 <nav>
                     <ul style={{ listStyle: 'none', display: 'flex', gap: '20px', margin: 0, padding: 0 }}>
                         <li>
-                            <a href="#about" 
-                               style={{ color: currentPage === 'about' ? activeColor : linkColor, textDecoration: 'none' }}
-                               onClick={(e) => { e.preventDefault(); setCurrentPage('about'); }}>
-                               about
-                            </a>
+                            <NavLink to="/" style={getLinkStyle}>about</NavLink>
                         </li>
                         <li>
-                            <a href="#projects" 
-                               style={{ color: currentPage === 'projects' ? activeColor : linkColor, textDecoration: 'none' }}
-                               onClick={(e) => { e.preventDefault(); setCurrentPage('projects'); }}>
-                               projects
-                            </a>
+                            <NavLink to="/projects" style={getLinkStyle}>projects</NavLink>
                         </li>
                         <li>
-                            <a href="#contact" 
-                               style={{ color: currentPage === 'contact' ? activeColor : linkColor, textDecoration: 'none' }}
-                               onClick={(e) => { e.preventDefault(); setCurrentPage('contact'); }}>
-                               contact
-                            </a>
+                            <NavLink to="/contact" style={getLinkStyle}>contact</NavLink>
                         </li>
                     </ul>
                 </nav>
                 
-                {/* 开关按钮完美对齐到最右侧，并参考暗黑模式图加上了淡淡的边框 */}
                 <button 
                     onClick={toggleTheme}
                     style={{

@@ -1,7 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+// 引入 Assignment 1 的自定义 Hook
+import useClickPosition from '../hooks/useClickPosition'; 
+// 引入 Assignment 2 的 ThemeContext
+import { useTheme } from '../context/ThemeContext'; 
 
-function Gallery({ project, isDarkMode }) {
+// 删除了 isDarkMode prop，现在由 Context 提供
+function Gallery({ project }) {
   const [showAbs, setShowAbs] = useState(false);
+  
+  // Assignment 1: 创建一个 ref 用于绑定当前的卡片 DOM 元素
+  const cardRef = useRef(null); 
+  
+  // Assignment 2: 直接从 Context 中获取 isDarkMode，告别一层层传参
+  const { isDarkMode } = useTheme(); 
+
+  // Assignment 1: 启用点击位置记录 Hook。用 project.badge (如 "CHI") 作为该区域的日志名称
+  useClickPosition(project.badge || "Project Card", cardRef);
 
   const cardStyle = {
     display: 'flex',
@@ -21,7 +35,7 @@ function Gallery({ project, isDarkMode }) {
 
   // 复刻截图里的彩色会议标签
   const badgeStyle = {
-    backgroundColor: project.badgeColor || '#333', // 动态读取你设置的颜色
+    backgroundColor: project.badgeColor || '#333', // 动态读取设置的颜色
     color: '#fff',
     padding: '4px 0',
     textAlign: 'center',
@@ -59,7 +73,8 @@ function Gallery({ project, isDarkMode }) {
   };
 
   return (
-    <div style={cardStyle}>
+    // Assignment 1: 将 ref 绑定到最外层的 div 上，这样点击整个卡片区域都会被 Hook 监听到
+    <div style={cardStyle} ref={cardRef}>
       
       {/* 左侧：彩色标签 + 缩略图 */}
       <div style={imageContainerStyle}>

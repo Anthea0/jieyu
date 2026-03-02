@@ -1,9 +1,14 @@
 import React from 'react';
 import Gallery from './Gallery';
+// 1. 引入仓库
+import { useTheme } from '../context/ThemeContext';
 
-function Projects({ isDarkMode }) {
+// 2. 删掉括号里的参数
+function Projects() {
   
-  // 进阶学术风格：按年份分组的数据结构，并加入了 badge (会议标签)
+  // 3. 接入 Context
+  const { isDarkMode } = useTheme();
+
   const publicationsByYear = [
     {
       year: "2026",
@@ -11,14 +16,14 @@ function Projects({ isDarkMode }) {
         {
           id: 1,
           badge: "CHI",
-          badgeColor: "#e86e96", // 参考截图里的 CHI 樱花粉
+          badgeColor: "#e86e96",
           title: "From Tool to Partner: Expressive Behaviors as the Bridge to Human-Robot Creative Collaboration",
           authors: <><span style={{textDecoration: 'underline'}}>Jie Yu</span>*, Xinyi Zhang*, Yaqiong Luo, Ray LC, Kaishun Wu, Xin Tong, </>,
           venue: "In Proceedings of the 2026 CHI Conference on Human Factors in Computing Systems, Barcelona, Spain, 2026",
           image: "/img/chi26-8-fig1.jpg",
           abstract: "Human–robot creative collaboration is often constrained by command–response paradigms that position robots as tools rather than partners. While expressive robotics has shown social values, its role and behaviors in shaping creative partnerships with humans remains underexplored. Therefore, we investigate how robots' expressive behaviors influence co-creative engagement.",
           links: [
-            { name: "ABS", url: null }, // ABS由内部按钮接管，这里可以空着或者用作占位
+            { name: "ABS", url: null },
             { name: "PDF", url: "#" },
             { name: "VIDEO", url: "#" }
           ]
@@ -31,16 +36,14 @@ function Projects({ isDarkMode }) {
         {
           id: 2,
           badge: "SIGGRAPH Asia",
-          badgeColor: "#8b00ff", // 参考截图里的 UIST 亮紫色
+          badgeColor: "#8b00ff",
           title: "SofiBuddy: A Soft Mobile Interface for On-Body Interaction",
           authors: <>Yixuan Li, <span style={{textDecoration: 'underline'}}>Jie Yu</span>, Chenwan Halley Zhong, Zhaowen Deng, Teng Han, Yi Cai, and Xin Tong.</>,
           venue: "In Proceedings of the SIGGRAPH Asia 2025 Posters, Hongkong, China, 2026",
           image: "/img/SA.png",
           abstract: "A soft mobile interface with a lightweight transition module and a curvature-based inflatable actuator, offering gentle body conforming motion with interactive potential for companionship, assistance, and VR engagement.",
           links: [
-            { name: "PDF", url: "https://dl.acm.org/doi/10.1145/3757374.3771432" },
-            // { name: "VIDEO", url: "" },
-            // { name: "CODE", url: "#"}
+            { name: "PDF", url: "https://dl.acm.org/doi/10.1145/3757374.3771432" }
           ]
         }
       ]
@@ -49,8 +52,6 @@ function Projects({ isDarkMode }) {
 
   return (
     <main style={{ marginTop: '20px' }}>
-      
-      {/* 1. 完美复刻截图的顶部标题区 */}
       <div style={{ marginBottom: '50px' }}>
         <h1 style={{ margin: '0 0 10px 0', fontSize: '2.5rem', fontWeight: '300', color: isDarkMode ? '#fff' : '#000' }}>
           publications
@@ -60,18 +61,14 @@ function Projects({ isDarkMode }) {
         </p>
       </div>
       
-      {/* 2. 遍历年份数组 */}
       {publicationsByYear.map((yearGroup, index) => (
         <div key={index}>
-          
-          {/* 3. 极简年份分割线：左侧画线，右侧大字体年份 */}
           <div style={{ 
             display: 'flex', 
             alignItems: 'center', 
             marginBottom: '40px', 
-            marginTop: index === 0 ? '0' : '60px' // 第一个年份上边距为0
+            marginTop: index === 0 ? '0' : '60px'
           }}>
-            {/* 这里的 hr 就是那条水平线 */}
             <hr style={{ 
               flex: 1, 
               border: 'none', 
@@ -82,16 +79,17 @@ function Projects({ isDarkMode }) {
               marginLeft: '20px', 
               fontSize: '2.5rem', 
               fontWeight: '300', 
-              color: isDarkMode ? '#444' : '#e0e0e0', // 暗模式用深灰，亮模式用浅灰，还原那种若隐若现的高级感
+              color: isDarkMode ? '#444' : '#e0e0e0',
               lineHeight: '1'
             }}>
               {yearGroup.year}
             </span>
           </div>
 
-          {/* 4. 遍历渲染该年份下的所有 Project */}
           {yearGroup.projects.map((proj) => (
-            <Gallery key={proj.id} project={proj} isDarkMode={isDarkMode} />
+            // 4. 注意这里！之前是 <Gallery project={proj} isDarkMode={isDarkMode} />
+            // 现在 Gallery 自己会去拿 isDarkMode，所以不用传了
+            <Gallery key={proj.id} project={proj} />
           ))}
 
         </div>
