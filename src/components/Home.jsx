@@ -36,7 +36,7 @@ function Home() {
         </div>
 
         <div className="bio-photo">
-          <img src="/img/myphoto.jpg" alt="Profile Photo" className="profile-pic" style={{ width: '100%', maxWidth: '300px' }} />
+          <img src="/img/myphoto.jpg" alt="Profile" className="profile-pic" style={{ width: '100%', maxWidth: '300px' }} />
           <div className="contact-info" style={{ color: isDarkMode ? '#aaa' : '#555', marginTop: '15px', textAlign: 'left', paddingLeft: '10px' }}>
             <p style={{ margin: '2px 0' }}>No.1 Duxue Road</p>
             <p style={{ margin: '2px 0' }}>Guangzhou, China</p>
