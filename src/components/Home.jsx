@@ -19,7 +19,7 @@ function Home() {
         <div className="bio-text">
           <p style={pStyle}>
             Welcome! I'm a 1st year PhD Student in Computational Media and Arts at HKUST(GZ). 
-            I am advised by Prof. Xin Tong at the Dynamic Graphics Group (DGP) lab and Prof. Yan Chen.
+            I am advised by Prof. Xin Tong at ARK Lab.
           </p>
           <p style={pStyle}>
             My research interests lie in human-robot interaction, and mechanical design, with a strong passionate on embodied AI, and companion robotics.
