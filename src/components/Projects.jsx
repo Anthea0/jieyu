@@ -5,7 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 
 // 2. 删掉括号里的参数
 function Projects() {
-  
+
   // 3. 接入 Context
   const { isDarkMode } = useTheme();
 
@@ -24,7 +24,7 @@ function Projects() {
           abstract: "Human–robot creative collaboration is often constrained by command–response paradigms that position robots as tools rather than partners. While expressive robotics has shown social values, its role and behaviors in shaping creative partnerships with humans remains underexplored. Therefore, we investigate how robots' expressive behaviors influence co-creative engagement.",
           links: [
             { name: "ABS", url: null },
-            { name: "PDF", url: "#" },
+            { name: "PDF", url: "https://dl.acm.org/doi/full/10.1145/3772318.3790270" },
             { name: "VIDEO", url: "#" }
           ]
         }
@@ -50,40 +50,57 @@ function Projects() {
     }
   ];
 
+  const colors = {
+    heading: isDarkMode ? '#E8EDF5' : '#0F172A',
+    subtle: isDarkMode ? '#64748B' : '#64748B',
+    divider: isDarkMode ? '#1E2A3A' : '#D8D2C4',
+    yearLabel: isDarkMode ? '#334155' : '#94A3B8',
+  };
+
   return (
     <main style={{ marginTop: '20px' }}>
-      <div style={{ marginBottom: '50px' }}>
-        <h1 style={{ margin: '0 0 10px 0', fontSize: '2.5rem', fontWeight: '300', color: isDarkMode ? '#fff' : '#000' }}>
+      <div style={{ marginBottom: '56px' }}>
+        <h1 style={{
+          margin: '0 0 10px 0',
+          fontFamily: "'Hanken Grotesk', sans-serif",
+          fontSize: '2.4rem',
+          fontWeight: 700,
+          letterSpacing: '-0.02em',
+          color: colors.heading,
+          lineHeight: 1.1
+        }}>
           publications
         </h1>
-        <p style={{ margin: 0, color: isDarkMode ? '#888' : '#666', fontSize: '0.95rem' }}>
-          publications by categories in reversed chronological order.
+        <p style={{ margin: 0, color: colors.subtle, fontSize: '0.88rem', fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '0.02em' }}>
+          in reversed chronological order
         </p>
       </div>
-      
+
       {publicationsByYear.map((yearGroup, index) => (
         <div key={index}>
-          <div style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            marginBottom: '40px', 
-            marginTop: index === 0 ? '0' : '60px'
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginBottom: '36px',
+            marginTop: index === 0 ? '0' : '64px',
+            gap: '16px'
           }}>
-            <hr style={{ 
-              flex: 1, 
-              border: 'none', 
-              borderTop: isDarkMode ? '1px solid #333' : '1px solid #eaeaea', 
-              margin: 0 
-            }} />
-            <span style={{ 
-              marginLeft: '20px', 
-              fontSize: '2.5rem', 
-              fontWeight: '300', 
-              color: isDarkMode ? '#444' : '#e0e0e0',
-              lineHeight: '1'
+            <span style={{
+              fontFamily: "'Hanken Grotesk', sans-serif",
+              fontSize: '0.78rem',
+              fontWeight: 400,
+              color: colors.subtle,
+              letterSpacing: '0.08em',
+              flexShrink: 0
             }}>
               {yearGroup.year}
             </span>
+            <hr style={{
+              flex: 1,
+              border: 'none',
+              borderTop: `1px dashed ${colors.divider}`,
+              margin: 0
+            }} />
           </div>
 
           {yearGroup.projects.map((proj) => (

@@ -7,56 +7,88 @@ function Header() {
     // 从 Context 获取状态和切换函数
     const { isDarkMode, toggleTheme } = useTheme();
     
-    // 自定义链接样式，根据当前是否激活 (isActive) 来变色
-    const getLinkStyle = ({ isActive }) => ({
-        color: isActive ? (isDarkMode ? '#fff' : '#000') : (isDarkMode ? '#aaa' : '#555'),
+    const navLinkStyle = ({ isActive }) => ({
+        color: isActive ? (isDarkMode ? '#E8EDF5' : '#0F172A') : (isDarkMode ? '#64748B' : '#94A3B8'),
         textDecoration: 'none',
-        fontWeight: isActive ? 'bold' : 'normal'
+        fontFamily: "'Hanken Grotesk', sans-serif",
+        fontWeight: 400,
+        fontSize: '0.9rem',
+        letterSpacing: '0.03em',
+        paddingBottom: '6px',
+        position: 'relative',
     });
 
     return (
-        <header style={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
+        <header style={{
+            display: 'flex',
+            justifyContent: 'space-between',
             alignItems: 'center',
-            padding: '40px 0 20px 0',
+            padding: '28px 0 16px 0',
             borderBottom: 'none'
         }}>
-            <div style={{ fontSize: '2.2rem', fontWeight: 'bold', color: isDarkMode ? '#fff' : '#000' }}>
-                Jie <span style={{ fontWeight: 300 }}>Yu</span>
+            <div style={{
+                fontFamily: "'Instrument Serif', Georgia, serif",
+                fontStyle: 'italic',
+                fontSize: '1.7rem',
+                fontWeight: 400,
+                color: isDarkMode ? '#E8EDF5' : '#0F172A',
+                letterSpacing: '0.01em'
+            }}>
+                Jie Yu
             </div>
-            
-            <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
                 <nav>
-                    <ul style={{ listStyle: 'none', display: 'flex', gap: '20px', margin: 0, padding: 0 }}>
-                        <li>
-                            <NavLink to="/" style={getLinkStyle}>about</NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/projects" style={getLinkStyle}>projects</NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/contact" style={getLinkStyle}>contact</NavLink>
-                        </li>
+                    <ul style={{ listStyle: 'none', display: 'flex', gap: '24px', margin: 0, padding: 0 }}>
+                        {[
+                            { to: '/', label: 'about' },
+                            { to: '/projects', label: 'publications' },
+                            { to: '/cv', label: 'cv' }
+                        ].map(({ to, label }) => (
+                            <li key={to} style={{ position: 'relative' }}>
+                                <NavLink to={to} style={navLinkStyle} end={to === '/'}>
+                                    {({ isActive }) => (
+                                        <>
+                                            {label}
+                                            {isActive && (
+                                                <span style={{
+                                                    position: 'absolute',
+                                                    bottom: '-2px',
+                                                    left: '50%',
+                                                    transform: 'translateX(-50%)',
+                                                    width: '4px',
+                                                    height: '4px',
+                                                    borderRadius: '50%',
+                                                    backgroundColor: '#0F172A',
+                                                    display: 'block'
+                                                }} />
+                                            )}
+                                        </>
+                                    )}
+                                </NavLink>
+                            </li>
+                        ))}
                     </ul>
                 </nav>
-                
-                <button 
+
+                <button
                     onClick={toggleTheme}
                     style={{
                         background: 'transparent',
-                        border: isDarkMode ? '1px solid #555' : 'none',
-                        borderRadius: '6px',
-                        padding: '4px 8px',
+                        border: 'none',
+                        borderRadius: '50%',
+                        width: '28px',
+                        height: '28px',
                         cursor: 'pointer',
-                        color: isDarkMode ? '#fff' : '#333',
-                        fontSize: '1.2rem',
+                        color: isDarkMode ? '#64748B' : '#94A3B8',
+                        fontSize: '0.95rem',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center'
+                        justifyContent: 'center',
+                        transition: 'color 0.2s'
                     }}
                 >
-                    {isDarkMode ? '🌙' : '☀'}
+                    {isDarkMode ? '🌙' : '☀️'}
                 </button>
             </div>
         </header>

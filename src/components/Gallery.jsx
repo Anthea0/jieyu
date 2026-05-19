@@ -17,119 +17,142 @@ function Gallery({ project }) {
   // Assignment 1: 启用点击位置记录 Hook。用 project.badge (如 "CHI") 作为该区域的日志名称
   useClickPosition(project.badge || "Project Card", cardRef);
 
-  const cardStyle = {
-    display: 'flex',
-    gap: '30px',
-    marginBottom: '50px',
-    alignItems: 'flex-start'
+  const colors = {
+    heading: isDarkMode ? '#E8EDF5' : '#0F172A',
+    text: isDarkMode ? '#B8C4D8' : '#334155',
+    subtle: isDarkMode ? '#64748B' : '#64748B',
+    border: isDarkMode ? '#1E2A3A' : '#D8D2C4',
+    accentBorder: isDarkMode ? '#94A3B8' : '#0F172A',
+    absBg: isDarkMode ? '#111827' : '#E2E8F0',
+    btnBorder: isDarkMode ? '#2A3547' : '#CBD5E1',
+    btnText: isDarkMode ? '#94A3B8' : '#64748B',
   };
 
-  // 左侧图片容器（用于将 Badge 和图片打包在一起）
+  const cardStyle = {
+    display: 'flex',
+    gap: '28px',
+    marginBottom: '52px',
+    alignItems: 'flex-start',
+    paddingLeft: '16px',
+    borderLeft: `2px solid ${colors.border}`,
+    transition: 'border-color 0.25s ease',
+  };
+
   const imageContainerStyle = {
-    width: '240px',
+    width: '220px',
     flexShrink: 0,
     display: 'flex',
     flexDirection: 'column',
-    gap: '8px' // 标签和图片之间的间距
+    gap: '8px'
   };
 
-  // 复刻截图里的彩色会议标签
   const badgeStyle = {
-    backgroundColor: project.badgeColor || '#333', // 动态读取设置的颜色
+    backgroundColor: project.badgeColor || '#333',
     color: '#fff',
-    padding: '4px 0',
-    textAlign: 'center',
-    borderRadius: '4px',
-    fontSize: '0.8rem',
-    fontWeight: 'bold',
-    letterSpacing: '1px'
+    padding: '3px 8px',
+    borderRadius: '2px',
+    fontSize: '0.7rem',
+    fontFamily: "'Hanken Grotesk', sans-serif",
+    fontWeight: 400,
+    letterSpacing: '0.06em',
+    textTransform: 'uppercase',
+    display: 'inline-block',
+    alignSelf: 'flex-start'
   };
 
   const imageStyle = {
     width: '100%',
-    borderRadius: '4px',
-    border: isDarkMode ? '1px solid #333' : '1px solid #eee',
-    boxShadow: isDarkMode ? '0 2px 8px rgba(255,255,255,0.05)' : '0 2px 8px rgba(0,0,0,0.05)',
-  };
-
-  const textStyle = {
-    color: isDarkMode ? '#bbb' : '#444',
-    lineHeight: '1.5'
+    borderRadius: '6px',
+    border: `1px solid ${colors.border}`,
+    boxShadow: isDarkMode ? '0 2px 8px rgba(0,0,0,0.3)' : '0 2px 12px rgba(28,25,23,0.07)',
   };
 
   const btnStyle = {
-    padding: '4px 10px',
-    border: isDarkMode ? '1px solid #555' : '1px solid #ccc',
-    borderRadius: '3px',
+    padding: '3px 10px',
+    border: `1px solid ${colors.btnBorder}`,
+    borderRadius: '2px',
     cursor: 'pointer',
     background: 'transparent',
-    color: isDarkMode ? '#ddd' : '#333',
-    fontSize: '0.75rem',
-    fontWeight: 'bold',
+    color: colors.btnText,
+    fontFamily: "'Hanken Grotesk', sans-serif",
+    fontSize: '0.68rem',
+    fontWeight: 400,
     textTransform: 'uppercase',
+    letterSpacing: '0.07em',
     textDecoration: 'none',
     display: 'inline-block',
     transition: 'all 0.2s ease',
   };
 
   return (
-    // Assignment 1: 将 ref 绑定到最外层的 div 上，这样点击整个卡片区域都会被 Hook 监听到
-    <div style={cardStyle} ref={cardRef}>
-      
-      {/* 左侧：彩色标签 + 缩略图 */}
+    <div
+      style={cardStyle}
+      ref={cardRef}
+      onMouseEnter={e => e.currentTarget.style.borderColor = colors.accentBorder}
+      onMouseLeave={e => e.currentTarget.style.borderColor = colors.border}
+    >
       <div style={imageContainerStyle}>
-        {/* 如果数据里有 badge，就渲染这个标签 */}
         {project.badge && (
           <div style={badgeStyle}>{project.badge}</div>
         )}
         <img src={project.image} alt="Thumbnail" style={imageStyle} />
       </div>
 
-      {/* 右侧：学术信息流 */}
-      <div>
-        <h3 style={{ margin: '0 0 8px 0', fontSize: '1.2rem', fontWeight: '500', color: isDarkMode ? '#fff' : '#000' }}>
+      <div style={{ flex: 1 }}>
+        <h3 style={{
+          margin: '0 0 10px 0',
+          fontFamily: "'Hanken Grotesk', sans-serif",
+          fontWeight: 600,
+          fontSize: '1.05rem',
+          lineHeight: '1.45',
+          color: colors.heading
+        }}>
           {project.title}
         </h3>
-        
-        <p style={{ margin: '0 0 4px 0', fontSize: '1rem', ...textStyle }}>
+
+        <p style={{ margin: '0 0 4px 0', fontSize: '0.92rem', color: colors.text, lineHeight: '1.6' }}>
           {project.authors}
         </p>
-        
-        <p style={{ margin: '0 0 15px 0', fontSize: '1rem', fontStyle: 'italic', ...textStyle }}>
+
+        <p style={{ margin: '0 0 16px 0', fontSize: '0.88rem', fontStyle: 'italic', color: colors.subtle, lineHeight: '1.5' }}>
           {project.venue}
         </p>
-        
+
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          {/* ABS 按钮 */}
-          <button 
-            onClick={() => setShowAbs(!showAbs)} 
+          <button
+            onClick={() => setShowAbs(!showAbs)}
             style={{
-              ...btnStyle, 
-              backgroundColor: showAbs ? (isDarkMode ? '#555' : '#eee') : 'transparent'
+              ...btnStyle,
+              backgroundColor: showAbs ? colors.absBg : 'transparent',
+              borderColor: showAbs ? colors.accentBorder : colors.btnBorder,
+              color: showAbs ? colors.accentBorder : colors.btnText,
             }}
           >
             ABS
           </button>
-          
-          {/* 渲染其他按钮 */}
+
           {project.links.filter(link => link.name !== 'ABS').map((link, index) => (
-            <a key={index} href={link.url} style={btnStyle}>
+            <a key={index} href={link.url} style={btnStyle}
+              onMouseEnter={e => { e.currentTarget.style.backgroundColor = colors.accentBorder; e.currentTarget.style.borderColor = colors.accentBorder; e.currentTarget.style.color = isDarkMode ? '#0A0F1C' : '#F5F2E9'; }}
+              onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.borderColor = colors.btnBorder; e.currentTarget.style.color = colors.btnText; }}
+            >
               {link.name}
             </a>
           ))}
         </div>
 
-        {/* 展开的摘要区 */}
         {showAbs && (
-          <div style={{ 
-            marginTop: '15px', 
-            padding: '12px 15px', 
-            backgroundColor: isDarkMode ? '#222' : '#f9f9f9',
-            borderLeft: isDarkMode ? '3px solid #555' : '3px solid #ccc',
-            fontSize: '0.95rem',
-            ...textStyle
+          <div style={{
+            marginTop: '14px',
+            padding: '12px 14px',
+            backgroundColor: colors.absBg,
+            borderLeft: `2px solid ${colors.accentBorder}`,
+            borderRadius: '0 4px 4px 0',
+            fontSize: '0.88rem',
+            color: colors.text,
+            lineHeight: '1.65'
           }}>
-            <strong>Abstract: </strong>{project.abstract}
+            {project.abstract}
           </div>
         )}
       </div>

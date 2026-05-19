@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './components/Home';
 import Projects from './components/Projects';
-import Contact from './components/Contact';
+import CV from './components/CV';
 // 引入 Context
 import { useTheme } from './context/ThemeContext';
 
@@ -18,13 +18,13 @@ function App() {
   };
 
   const lightStyle = {
-    backgroundColor: '#ffffff',
-    color: '#000000',
+    backgroundColor: '#F0F4F8',
+    color: '#0F172A',
   };
 
   const darkStyle = {
-    backgroundColor: '#121212',
-    color: '#ffffff',
+    backgroundColor: '#0A0F1C',
+    color: '#E8EDF5',
   };
 
   const appStyle = {
@@ -39,15 +39,15 @@ function App() {
         <div className="container">
           {/* Header 不再需要传任何参数 */}
           <Header />
-          
+
           {/* 定义路由规则 */}
           <Routes>
             <Route path="/" element={<Home />} />
             {/* 满足 Assignment 3：将原 Projects 组件映射到 /gallery 路径 */}
             <Route path="/projects" element={<Projects />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route path="/cv" element={<CV />} />
           </Routes>
-          
+
           {/* Footer 也不需要传参 */}
           <Footer />
         </div>
